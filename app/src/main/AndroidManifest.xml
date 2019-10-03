@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".SQLiteDBTestActivity">
         </activity>
+        <activity android:name=".GlideTestActivity">
+        </activity>
     </application>
 
 </manifest>

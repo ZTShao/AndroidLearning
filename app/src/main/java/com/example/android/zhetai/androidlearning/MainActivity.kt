@@ -33,7 +33,7 @@ class MainActivity : Activity() {
 
         glideTestButton = findViewById(R.id.button_glide_test)
         glideTestButton.setOnClickListener {
-
+            startActivity(Intent(this, GlideTestActivity::class.java))
         }
 
         sqliteTestButton = findViewById(R.id.button_sqlite_test)
