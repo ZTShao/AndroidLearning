@@ -10,10 +10,12 @@ class MainActivity : Activity() {
 
     private lateinit var networkTestButton: Button
     private lateinit var jsonTestButton: Button
+    private lateinit var sqliteTestButton: Button
+    private lateinit var glideTestButton: Button
+
     private lateinit var imageView1: ImageView
     private lateinit var imageView2: ImageView
     private lateinit var imageView3: ImageView
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +29,16 @@ class MainActivity : Activity() {
         jsonTestButton = findViewById(R.id.button_json_test)
         jsonTestButton.setOnClickListener {
             startActivity(Intent(this, JsonTestActivity::class.java))
+        }
+
+        glideTestButton = findViewById(R.id.button_glide_test)
+        glideTestButton.setOnClickListener {
+
+        }
+
+        sqliteTestButton = findViewById(R.id.button_sqlite_test)
+        sqliteTestButton.setOnClickListener {
+            startActivity(Intent(this, SQLiteDBTestActivity::class.java))
         }
 
         imageView1 = findViewById(R.id.imageview_pic1)

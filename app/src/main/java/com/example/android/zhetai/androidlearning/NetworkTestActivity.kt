@@ -26,7 +26,7 @@ class NetworkTestActivity : Activity() {
         webView = findViewById(R.id.webview_test)
         urlEditText = findViewById(R.id.edit_text_url)
         requestButton = findViewById(R.id.button_request_url)
-        requestButton.setOnClickListener {
+        requestButton.setOnClickListener { _ ->
             val url = "http://" + urlEditText.text.toString()
             disposable.add(
                 Single.create(SingleOnSubscribe<String> {

@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".JsonTestActivity">
         </activity>
+        <activity android:name=".SQLiteDBTestActivity">
+        </activity>
     </application>
 
 </manifest>
