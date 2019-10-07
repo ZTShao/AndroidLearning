@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.android.zhetai.androidlearning.R
 import com.example.android.zhetai.androidlearning.Structure.ItemData
 
@@ -24,6 +25,7 @@ class RecyclerViewWidgetListAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.initContent(dataList[position])
+        Glide.with(context!!).load("https://ztshao.github.io/zhetais.homepage/img/5.e357f3f7.jpeg").into(holder.itemContentImageView)
         holder.itemDeleteButton.setOnClickListener {
             dataList.removeAt(position)
             this.notifyItemRemoved(position)
@@ -44,7 +46,6 @@ class RecyclerViewWidgetListAdapter(
 
         fun initContent(itemData: ItemData) {
             itemAvatarImageView.setImageResource(itemData.avatarRes)
-            itemContentImageView.setImageResource(itemData.itemContentImgRes)
             itemAccountTextView.text = itemData.accountName
             itemContentTextView.text = itemData.itemContentText
         }
