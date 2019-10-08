@@ -2,10 +2,9 @@ package com.example.android.zhetai.androidlearning.Utils;
 
 import android.content.Context;
 import com.example.android.zhetai.androidlearning.Structure.ItemData;
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,27 +12,20 @@ import java.util.ArrayList;
 public class DataManager {
     private Context context;
     private String fileName;
+    private Gson gson;
 
-    public DataManager(Context context, String fileName) {
+    public DataManager(Context context, String fileName, Gson gson) {
         this.context = context;
         this.fileName = fileName;
+        this.gson = gson;
     }
 
-    public static JSONArray toJSONArray(ArrayList<ItemData> items) throws JSONException {
-        JSONArray jsonArray = new JSONArray();
-        for (ItemData item : items) {
-            JSONObject jsonObject = item.toJSON();
-            jsonArray.put(jsonObject);
-        }
-        return jsonArray;
-    }
-
-    public void saveToFile(ArrayList<ItemData> items) throws JSONException, IOException {
+    public void saveListToFile(ArrayList<ItemData> items) throws JSONException, IOException {
         FileOutputStream fileOutputStream;
         OutputStreamWriter outputStreamWriter;
         fileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
         outputStreamWriter = new OutputStreamWriter(fileOutputStream);
-        outputStreamWriter.write(toJSONArray(items).toString());
+        outputStreamWriter.write(gson.toJson(items));
         outputStreamWriter.close();
         fileOutputStream.close();
     }
@@ -50,14 +42,11 @@ public class DataManager {
             while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line);
             }
+            ArrayList<ItemData> retrivedData = gson.fromJson(builder.toString(),
+                    new TypeToken<ArrayList<ItemData>>() {
+                    }.getType());
 
-            JSONArray jsonArray = (JSONArray) new JSONTokener(builder.toString()).nextValue();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                ItemData item = ItemData.Companion.generateItemDataFromJSON(jsonArray.getJSONObject(i));
-                items.add(item);
-            }
-
-
+            items.addAll(retrivedData);
         } catch (FileNotFoundException ignored) {
 
         } finally {

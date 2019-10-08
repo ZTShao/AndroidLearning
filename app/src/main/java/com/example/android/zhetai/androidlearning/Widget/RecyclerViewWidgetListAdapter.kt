@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.example.android.zhetai.androidlearning.KotlinExtensions.getString
 import com.example.android.zhetai.androidlearning.R
 import com.example.android.zhetai.androidlearning.Structure.ItemData
 
 class RecyclerViewWidgetListAdapter(
     val context: Context?,
-    var dataList: MutableList<ItemData>
+    var dataList: ArrayList<ItemData>
 ) : RecyclerView.Adapter<RecyclerViewWidgetListAdapter.ItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(inflate(context, R.layout.item_itemview_glide_test_recyclerview, null))
@@ -24,30 +24,54 @@ class RecyclerViewWidgetListAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.initContent(dataList[position])
-        Glide.with(context!!).load("https://ztshao.github.io/zhetais.homepage/img/5.e357f3f7.jpeg").into(holder.itemContentImageView)
+    }
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int, payloads: MutableList<Any>) {
         holder.itemDeleteButton.setOnClickListener {
-            dataList.removeAt(position)
-            this.notifyItemRemoved(position)
-            this.updateIndex(position)
+            deleteItem(position)
         }
+        if (payloads.isNotEmpty() && payloads[0] == PayLoadType.CHANGE) return
+        holder.initContent(dataList[position])
     }
 
     private fun updateIndex(position: Int) {
-        this.notifyItemRangeChanged(position, itemCount - position)
+        notifyItemRangeChanged(position, itemCount - position, PayLoadType.CHANGE)
+    }
+
+    public fun addItem(item: ItemData) {
+        dataList.add(item)
+        notifyItemInserted(dataList.size)
+    }
+
+    public fun deleteItem(position: Int) {
+        dataList.removeAt(position)
+        notifyItemRemoved(position)
+        updateIndex(position)
+    }
+
+    enum class PayLoadType {
+        INIT,
+        CHANGE
     }
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var itemContentImageView: ImageView = itemView.findViewById(R.id.image_view_content)
         var itemAvatarImageView: ImageView = itemView.findViewById(R.id.image_view_avatar)
         var itemAccountTextView: TextView = itemView.findViewById(R.id.text_view_account_name)
         var itemDeleteButton: ImageView = itemView.findViewById(R.id.button_delete_item)
         var itemContentTextView: TextView = itemView.findViewById(R.id.text_view_content)
+        var itemDateTextView: TextView = itemView.findViewById(R.id.text_view_log_date)
 
         fun initContent(itemData: ItemData) {
             itemAvatarImageView.setImageResource(itemData.avatarRes)
             itemAccountTextView.text = itemData.accountName
             itemContentTextView.text = itemData.itemContentText
+            itemDateTextView.text = String.format(
+                itemDateTextView.getString(R.string.date_format),
+                itemData.logDate.month + 1,
+                itemData.logDate.monthDay,
+                itemData.logDate.hour,
+                itemData.logDate.minute
+            )
         }
     }
 }
