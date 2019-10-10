@@ -12,7 +12,6 @@ import com.example.android.zhetai.androidlearning.Structure.ItemData
 import com.example.android.zhetai.androidlearning.Utils.DataManager
 import com.example.android.zhetai.androidlearning.Widget.RecyclerViewWidgetListAdapter
 import com.google.gson.GsonBuilder
-import java.util.*
 
 internal class JsonTestActivity : Activity() {
 

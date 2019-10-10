@@ -1,15 +1,10 @@
 package com.example.android.zhetai.androidlearning
 
 import android.app.Activity
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.android.zhetai.androidlearning.Structure.ItemData
-import com.example.android.zhetai.androidlearning.Widget.RecyclerViewWidgetListAdapter
 
 class GlideTestActivity : Activity() {
     private lateinit var loadImageButton: Button
